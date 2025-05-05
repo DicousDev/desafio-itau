@@ -1,0 +1,36 @@
+package support;
+
+import lombok.AllArgsConstructor;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+
+import java.net.URI;
+import java.util.List;
+
+@AllArgsConstructor
+public class RestTemplate {
+
+    private final TestRestTemplate restTemplate;
+
+    public ResponseEntity<String> sendPOST(URI uri, Object request) {
+        return sendJSON(uri, request, String.class, HttpMethod.POST);
+    }
+
+    private <T> ResponseEntity<T> sendJSON(URI uri,
+                                           Object request,
+                                           Class<T> clazz,
+                                           HttpMethod httpMethod) {
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.putIfAbsent(HttpHeaders.CONTENT_TYPE, List.of(MediaType.APPLICATION_JSON_VALUE));
+            HttpEntity<Object> requestEntity = new HttpEntity<>(request, headers);
+            return restTemplate.exchange(uri, httpMethod, requestEntity, clazz);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
