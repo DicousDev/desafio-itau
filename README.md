@@ -60,6 +60,11 @@ A queue aceita mensagem no formato JSON com seguinte body
 - Mockito
 - MockServer
 
+## Padrões utilizados
+
+- A nomenclatura padrão do projeto é toda em inglês
+- Design patterns implementados Strategy, Builder
+
 ## Arquitetura do projeto
 
 <b>*🐘 PostgreSQL*</b>:  Foi utilizado este banco de dados para ter um schema fixo e operações transacionais ACID.
