@@ -26,6 +26,21 @@ public class ResponseEntityAssert extends AbstractCustomAssert<ResponseEntityAss
         return this;
     }
 
+    public ResponseEntityAssert isOk() {
+        status(HttpStatus.OK);
+        return this;
+    }
+
+    public ResponseEntityAssert isUnprocessableEntity() {
+        status(HttpStatus.UNPROCESSABLE_ENTITY);
+        return this;
+    }
+
+    public ResponseEntityAssert isNotFound() {
+        status(HttpStatus.NOT_FOUND);
+        return this;
+    }
+
     public ResponseEntityAssert responseBody(String expected, String ... ignore) {
         String message = "current payload: \n" + this.actual.getBody() + "\n";
 

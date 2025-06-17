@@ -6,5 +6,4 @@ COPY target/*.jar .
 
 EXPOSE 8080
 
-# TODO: precisa configurar
-#CMD ["java", "-jar", "desafio-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "desafioitau-0.0.1-SNAPSHOT.jar"]

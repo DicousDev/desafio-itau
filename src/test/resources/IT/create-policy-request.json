@@ -1,0 +1,24 @@
+{
+  "category": "LIFE",
+  "salesChannel": "WEBSITE",
+  "paymentMethod": "PIX",
+  "coverages": [
+    {
+      "title": "Roubo",
+      "amount": 1000.5
+    },
+    {
+      "title": "Perda total",
+      "amount": 10000.25
+    }
+  ],
+  "assistances": [
+    "Guincho até 250km",
+    "Troca de óleo",
+    "Chaveiro 24h"
+  ],
+  "customer_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "product_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "total_monthly_premium_amount": 75000,
+  "insured_amount": 80000
+}

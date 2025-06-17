@@ -1,0 +1,104 @@
+{
+  "rabbit_version": "4.1.1",
+  "rabbitmq_version": "4.1.1",
+  "product_name": "RabbitMQ",
+  "product_version": "4.1.1",
+  "rabbitmq_definition_format": "cluster",
+  "original_cluster_name": "rabbit@770160c6810d",
+  "explanation": "Definitions of cluster 'rabbit@770160c6810d'",
+  "users": [
+    {
+      "name": "guest",
+      "password_hash": "eak7zZn+w2dBA6QWyfYkOUSyeLbefwgzy4BKSZh30YsPK/W3",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": [
+        "administrator"
+      ],
+      "limits": {}
+    }
+  ],
+  "vhosts": [
+    {
+      "name": "/",
+      "description": "Default virtual host",
+      "metadata": {
+        "description": "Default virtual host",
+        "tags": [],
+        "default_queue_type": "classic"
+      },
+      "tags": []
+    }
+  ],
+  "permissions": [
+    {
+      "user": "guest",
+      "vhost": "/",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    }
+  ],
+  "topic_permissions": [],
+  "parameters": [],
+  "global_parameters": [
+    {
+      "name": "cluster_tags",
+      "value": []
+    },
+    {
+      "name": "internal_cluster_id",
+      "value": "rabbitmq-cluster-id-0ndgrBRD877CdWtdGKpTVA"
+    }
+  ],
+  "policies": [],
+  "queues": [
+    {
+      "name": "POLICY_QUEUE",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-queue-type": "classic"
+      }
+    },
+    {
+      "name": "PAYMENT_QUEUE",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-queue-type": "classic"
+      }
+    },
+    {
+      "name": "SUBSCRIPTION_AUTHORIZATION_QUEUE",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-queue-type": "classic"
+      }
+    }
+  ],
+  "exchanges": [
+    {
+      "name": "POLICY_EXCHANGE_NAME",
+      "vhost": "/",
+      "type": "direct",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    }
+  ],
+  "bindings": [
+    {
+      "source": "POLICY_EXCHANGE_NAME",
+      "vhost": "/",
+      "destination": "POLICY_QUEUE",
+      "destination_type": "queue",
+      "routing_key": "policy",
+      "arguments": {}
+    }
+  ]
+}

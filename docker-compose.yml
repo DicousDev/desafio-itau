@@ -1,25 +1,41 @@
 version: '3.8'
 
 services:
-#  api:
-#    container_name: template-api
-#    image: joaodicous/desafio-template:latest
-#    ports:
-#      - 8080:8080
-#    environment:
-#      DB_URL: jdbc:postgresql://db:5432/template
-#      DB_USERNAME: admin
-#      DB_PASSWORD: admin
-#    depends_on:
-#      - db
+  api:
+    container_name: order-api
+    image: joaodicous/desafio-itau:latest
+    ports:
+      - 8080:8080
+    environment:
+      DB_URL: jdbc:postgresql://db:5432/order
+      DB_USERNAME: admin
+      DB_PASSWORD: admin
+      ORDER_HOST_RABBITMQ: rabbit
+      ORDER_PORT_RABBITMQ: 5672
+      ORDER_USERNAME_RABBITMQ: guest
+      ORDER_PASSWORD_RABBITMQ: guest
+    depends_on:
+      - db
+      - rabbit
   db:
-    container_name: 'template_db'
+    container_name: 'order-ms'
     image: postgres:17-alpine
     ports:
       - "5432:5432"
     volumes:
       - .docker/postgres:/var/lib/postgresql
     environment:
-      POSTGRES_DB: template
+      POSTGRES_DB: order
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
+  rabbit:
+    container_name: 'order-rabbit'
+    image: rabbitmq:4-management
+    ports:
+      - 5672:5672
+      - 15672:15672
+    environment:
+      RABBITMQ_LOAD_DEFINITIONS: /etc/rabbitmq/definitions.json
+    volumes:
+      - ./rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+      - ./definitions.json:/etc/rabbitmq/definitions.json:ro

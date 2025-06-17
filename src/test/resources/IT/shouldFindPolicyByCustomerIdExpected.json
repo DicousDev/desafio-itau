@@ -1,0 +1,15 @@
+{
+  "id": "00000000-0000-0000-0000-000000000000",
+  "customer_id": "00000000-0000-0000-0000-000000000000",
+  "product_id": "00000000-0000-0000-0000-000000000000",
+  "category": "AUTO",
+  "salesChannel": "WEBSITE",
+  "paymentMethod": "PIX",
+  "status": "PENDING",
+  "createdAt": "2025-06-17T17:00:00",
+  "finishedAt": null,
+  "total_monthly_premium_amount": 80000.00,
+  "insured_amount": 75000.00,
+  "assistances": [],
+  "history": []
+}

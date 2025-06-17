@@ -1,6 +1,9 @@
 package support;
 
-import br.com.projeto.template.TemplateApplication;
+import br.com.desafioitau.order.OrderApplication;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.mockserver.client.MockServerClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
@@ -12,6 +15,7 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.util.FileCopyUtils;
 import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.containers.RabbitMQContainer;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.io.IOException;
@@ -25,7 +29,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 @Testcontainers
 @ActiveProfiles("IT")
-@SpringBootTest(classes = {TemplateApplication.class, BeanConfig.class} , webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = {OrderApplication.class, BeanConfig.class} , webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public abstract class ITemplate {
 
     private static final String SERVER_URL = "http://localhost:%s/%s";
@@ -43,15 +47,26 @@ public abstract class ITemplate {
             .withPassword("it-password")
             .withReuse(true);
 
+    private static final RabbitMQContainer RABBIT_MQ_CONTAINER = new RabbitMQContainer("rabbitmq:4-management")
+            .withExposedPorts(5672, 15672);
+
     static {
         PG_CONTAINER.start();
+        RABBIT_MQ_CONTAINER.start();
     }
 
     @DynamicPropertySource
     static void properties(DynamicPropertyRegistry registry) {
+        // PostgreSQL
         registry.add("spring.datasource.url", PG_CONTAINER::getJdbcUrl);
         registry.add("spring.datasource.password", PG_CONTAINER::getPassword);
         registry.add("spring.datasource.username", PG_CONTAINER::getUsername);
+
+        // RabbitMQ
+        registry.add("spring.rabbitmq.host", RABBIT_MQ_CONTAINER::getHost);
+        registry.add("spring.rabbitmq.port", RABBIT_MQ_CONTAINER::getAmqpPort);
+        registry.add("spring.rabbitmq.username", RABBIT_MQ_CONTAINER::getAdminUsername);
+        registry.add("spring.rabbitmq.password", RABBIT_MQ_CONTAINER::getAdminPassword);
     }
 
     protected String readJSON(String path) {

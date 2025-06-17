@@ -1,0 +1,7 @@
+{
+  "details": "One parameter is required",
+  "status": 422,
+  "path": "/policies",
+  "timestamp": "2025-06-17T00:44:53.0836965",
+  "erros": []
+}
