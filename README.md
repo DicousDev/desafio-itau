@@ -138,3 +138,85 @@ Camada responsável por manter validações de objetos
 
 - Simplificar implementações de tipos de cliente (regular, alto risco, preferencial, sem informação, etc...) 
 - Evitando race condition nas solicitações de apólice.
+
+## Exemplo para criar uma nova solicitação de apólice
+
+POST http://localhost:8080/policies
+
+```bash 
+curl -X 'POST' \
+  'http://localhost:8080/policies' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "category": "LIFE",
+  "salesChannel": "WEBSITE",
+  "paymentMethod": "PIX",
+  "coverages": [
+    {
+      "title": "Roubo",
+      "amount": 1000.5
+    },
+    {
+      "title": "Perda total",
+      "amount": 10000.25
+    }
+  ],
+  "assistances": [
+    "Guincho até 250km",
+    "Troca de óleo",
+    "Chaveiro 24h"
+  ],
+  "customer_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "product_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "total_monthly_premium_amount": 75000,
+  "insured_amount": 80000
+}'
+```
+## JSON 
+```json
+{
+  "category": "LIFE",
+  "salesChannel": "WEBSITE",
+  "paymentMethod": "PIX",
+  "coverages": [
+    {
+      "title": "Roubo",
+      "amount": 1000.5
+    },
+    {
+      "title": "Perda total",
+      "amount": 10000.25
+    }
+  ],
+  "assistances": [
+    "Guincho até 250km",
+    "Troca de óleo",
+    "Chaveiro 24h"
+  ],
+  "customer_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "product_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "total_monthly_premium_amount": 75000,
+  "insured_amount": 80000
+}
+```
+
+## Exemplo para cancelar uma solicitação de apólice
+
+PATCH http://localhost:8080/policies
+
+```bash
+curl -X 'PATCH' \
+  'http://localhost:8080/policies/cabe4ea5-eca5-4ae2-82af-f3558c1ed260' \
+  -H 'accept: application/json'
+```
+
+## Exemplo para consultar uma solicitação apólice
+
+GET http://localhost:8080/policies
+
+```bash
+curl -X 'GET' \
+  'http://localhost:8080/policies?idExternal=cabe4ea5-eca5-4ae2-82af-f3558c1ed260' \
+  -H 'accept: application/json'
+```
